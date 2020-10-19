@@ -6,7 +6,7 @@
 
 ## Example
 ```haxe
-var botAPI:TelegramBotAPI = new TelegramBotAPI(BOT_TOKEN);
+var botAPI:TelegramBotAPI = new TelegramBotAPI(BOT_TOKEN); // add bot as prefix to token
 botAPI.getMe(function(r:Response<User>) {
 	if (r.ok) {
 		trace(r.result);
