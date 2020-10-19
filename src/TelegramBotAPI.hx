@@ -47,6 +47,8 @@ class TelegramBotAPI {
 	public function stopMessageLiveLocation(params:StopMessageLiveLocationParams, ?onComplete:Response<EitherType<Message, Bool>>->Void):Void call(methodName(), params, onComplete);
 	public function sendVenue(params:SendVenueParams, ?onComplete:Response<Message>->Void):Void call(methodName(), params, onComplete);
 	public function sendContact(params:SendContactParams, ?onComplete:Response<Message>->Void):Void call(methodName(), params, onComplete);
+	public function sendPoll(params:SendPollParams, ?onComplete:Response<Message>->Void):Void call(methodName(), params, onComplete);
+	public function sendDice(params:SendDiceParams, ?onComplete:Response<Message>->Void):Void call(methodName(), params, onComplete);
 	public function sendChatAction(params:SendChatActionParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function getUserProfilePhotos(params:GetUserProfilePhotosParams, ?onComplete:Response<UserProfilePhotos>->Void):Void call(methodName(), params, onComplete);
 	public function getFile(params:GetFileParams, ?onComplete:Response<File>->Void):Void call(methodName(), params, onComplete);
@@ -54,6 +56,8 @@ class TelegramBotAPI {
 	public function unbanChatMember(params:UnbanChatMemberParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function restrictChatMember(params:RestrictChatMemberParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function promoteChatMember(params:PromoteChatMemberParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
+	public function setChatAdministratorCustomTitle(params:SetChatAdministratorCustomTitleParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
+	public function setChatPermissions(params:SetChatPermissionsParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function exportChatInviteLink(params:ExportChatInviteLinkParams, ?onComplete:Response<String>->Void):Void call(methodName(), params, onComplete);
 	public function setChatPhoto(params:SetChatPhotoParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function deleteChatPhoto(params:DeleteChatPhotoParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
@@ -69,10 +73,13 @@ class TelegramBotAPI {
 	public function setChatStickerSet(params:SetChatStickerSetParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function deleteChatStickerSet(params:DeleteChatStickerSetParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function answerCallbackQuery(params:AnswerCallbackQueryParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
+	public function setMyCommands(params:SetMyCommandsParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
+	public function getMyCommands(?onComplete:Response<Array<BotCommand>>->Void):Void call(methodName(), null, onComplete);
 	public function editMessageText(params:EditMessageTextParams, ?onComplete:Response<EitherType<Message, Bool>>->Void):Void call(methodName(), params, onComplete);
 	public function editMessageCaption(params:EditMessageCaptionParams, ?onComplete:Response<EitherType<Message, Bool>>->Void):Void call(methodName(), params, onComplete);
 	public function editMessageMedia(params:EditMessageMediaParams, ?onComplete:Response<EitherType<EitherType<Void, Message>, Bool>>->Void):Void call(methodName(), params, onComplete);
 	public function editMessageReplyMarkup(params:EditMessageReplyMarkupParams, ?onComplete:Response<EitherType<Message, Bool>>->Void):Void call(methodName(), params, onComplete);
+	public function stopPoll(params:StopPollParams, ?onComplete:Response<Poll>->Void):Void call(methodName(), params, onComplete);
 	public function deleteMessage(params:DeleteMessageParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function sendSticker(params:SendStickerParams, ?onComplete:Response<Message>->Void):Void call(methodName(), params, onComplete);
 	public function getStickerSet(params:GetStickerSetParams, ?onComplete:Response<StickerSet>->Void):Void call(methodName(), params, onComplete);
@@ -81,6 +88,7 @@ class TelegramBotAPI {
 	public function addStickerToSet(params:AddStickerToSetParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function setStickerPositionInSet(params:SetStickerPositionInSetParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function deleteStickerFromSet(params:DeleteStickerFromSetParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
+	public function setStickerSetThumb(params:SetStickerSetThumbParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function answerInlineQuery(params:AnswerInlineQueryParams, ?onComplete:Response<Bool>->Void):Void call(methodName(), params, onComplete);
 	public function sendInvoice(params:SendInvoiceParams, ?onComplete:Response<Message>->Void):Void call(methodName(), params, onComplete);
 	public function answerShippingQuery(params:AnswerShippingQueryParams, ?onComplete:Response<Update>->Void):Void call(methodName(), params, onComplete);
@@ -355,6 +363,36 @@ typedef SendContactParams = {
 	
 }
 
+typedef SendPollParams = {
+
+	var chat_id:EitherType<Int, String>;
+	var question:String;
+	var options:Array<String>;
+	@:optional var is_anonymous:Bool;
+	@:optional var type:String;
+	@:optional var allows_multiple_answers:Bool;
+	@:optional var correct_option_id:Int;
+	@:optional var explanation:String;
+	@:optional var explanation_parse_mode:String;
+	@:optional var open_period:Int;
+	@:optional var close_date:Int;
+	@:optional var is_closed:Bool;
+	@:optional var disable_notification:Bool;
+	@:optional var reply_to_message_id:Int;
+	@:optional var reply_markup:EitherType<EitherType<EitherType<InlineKeyboardMarkup, ReplyKeyboardMarkup>, ReplyKeyboardRemove>, ForceReply>;
+	
+}
+
+typedef SendDiceParams = {
+
+	var chat_id:EitherType<Int, String>;
+	@:optional var emoji:String;
+	@:optional var disable_notification:Bool;
+	@:optional var reply_to_message_id:Int;
+	@:optional var reply_markup:EitherType<EitherType<EitherType<InlineKeyboardMarkup, ReplyKeyboardMarkup>, ReplyKeyboardRemove>, ForceReply>;
+	
+}
+
 typedef SendChatActionParams = {
 
 	var chat_id:EitherType<Int, String>;
@@ -395,11 +433,8 @@ typedef RestrictChatMemberParams = {
 
 	var chat_id:EitherType<Int, String>;
 	var user_id:Int;
+	var permissions:ChatPermissions;
 	@:optional var until_date:Int;
-	@:optional var can_send_messages:Bool;
-	@:optional var can_send_media_messages:Bool;
-	@:optional var can_send_other_messages:Bool;
-	@:optional var can_add_web_page_previews:Bool;
 	
 }
 
@@ -415,6 +450,21 @@ typedef PromoteChatMemberParams = {
 	@:optional var can_restrict_members:Bool;
 	@:optional var can_pin_messages:Bool;
 	@:optional var can_promote_members:Bool;
+	
+}
+
+typedef SetChatAdministratorCustomTitleParams = {
+
+	var chat_id:EitherType<Int, String>;
+	var user_id:Int;
+	var custom_title:String;
+	
+}
+
+typedef SetChatPermissionsParams = {
+
+	var chat_id:EitherType<Int, String>;
+	var permissions:ChatPermissions;
 	
 }
 
@@ -519,6 +569,14 @@ typedef AnswerCallbackQueryParams = {
 	
 }
 
+typedef SetMyCommandsParams = {
+
+	var commands:Array<BotCommand>;
+	
+}
+
+
+
 typedef EditMessageTextParams = {
 
 	@:optional var chat_id:EitherType<Int, String>;
@@ -561,6 +619,14 @@ typedef EditMessageReplyMarkupParams = {
 	
 }
 
+typedef StopPollParams = {
+
+	var chat_id:EitherType<Int, String>;
+	var message_id:Int;
+	@:optional var reply_markup:InlineKeyboardMarkup;
+	
+}
+
 typedef DeleteMessageParams = {
 
 	var chat_id:EitherType<Int, String>;
@@ -596,7 +662,8 @@ typedef CreateNewStickerSetParams = {
 	var user_id:Int;
 	var name:String;
 	var title:String;
-	var png_sticker:EitherType<InputFile, String>;
+	@:optional var png_sticker:EitherType<InputFile, String>;
+	@:optional var tgs_sticker:InputFile;
 	var emojis:String;
 	@:optional var contains_masks:Bool;
 	@:optional var mask_position:MaskPosition;
@@ -607,7 +674,8 @@ typedef AddStickerToSetParams = {
 
 	var user_id:Int;
 	var name:String;
-	var png_sticker:EitherType<InputFile, String>;
+	@:optional var png_sticker:EitherType<InputFile, String>;
+	@:optional var tgs_sticker:InputFile;
 	var emojis:String;
 	@:optional var mask_position:MaskPosition;
 	
@@ -623,6 +691,14 @@ typedef SetStickerPositionInSetParams = {
 typedef DeleteStickerFromSetParams = {
 
 	var sticker:String;
+	
+}
+
+typedef SetStickerSetThumbParams = {
+
+	var name:String;
+	var user_id:Int;
+	@:optional var thumb:EitherType<InputFile, String>;
 	
 }
 
@@ -739,6 +815,8 @@ typedef Update = {
 	@:optional var callback_query:CallbackQuery;
 	@:optional var shipping_query:ShippingQuery;
 	@:optional var pre_checkout_query:PreCheckoutQuery;
+	@:optional var poll:Poll;
+	@:optional var poll_answer:PollAnswer;
 	
 }
 
@@ -762,6 +840,9 @@ typedef User = {
 	@:optional var last_name:String;
 	@:optional var username:String;
 	@:optional var language_code:String;
+	@:optional var can_join_groups:Bool;
+	@:optional var can_read_all_group_messages:Bool;
+	@:optional var supports_inline_queries:Bool;
 	
 }
 
@@ -773,11 +854,12 @@ typedef Chat = {
 	@:optional var username:String;
 	@:optional var first_name:String;
 	@:optional var last_name:String;
-	@:optional var all_members_are_administrators:Bool;
 	@:optional var photo:ChatPhoto;
 	@:optional var description:String;
 	@:optional var invite_link:String;
 	@:optional var pinned_message:Message;
+	@:optional var permissions:ChatPermissions;
+	@:optional var slow_mode_delay:Int;
 	@:optional var sticker_set_name:String;
 	@:optional var can_set_sticker_set:Bool;
 	
@@ -793,27 +875,31 @@ typedef Message = {
 	@:optional var forward_from_chat:Chat;
 	@:optional var forward_from_message_id:Int;
 	@:optional var forward_signature:String;
+	@:optional var forward_sender_name:String;
 	@:optional var forward_date:Int;
 	@:optional var reply_to_message:Message;
+	@:optional var via_bot:User;
 	@:optional var edit_date:Int;
 	@:optional var media_group_id:String;
 	@:optional var author_signature:String;
 	@:optional var text:String;
 	@:optional var entities:Array<MessageEntity>;
-	@:optional var caption_entities:Array<MessageEntity>;
+	@:optional var animation:Animation;
 	@:optional var audio:Audio;
 	@:optional var document:Document;
-	@:optional var animation:Animation;
-	@:optional var game:Game;
 	@:optional var photo:Array<PhotoSize>;
 	@:optional var sticker:Sticker;
 	@:optional var video:Video;
-	@:optional var voice:Voice;
 	@:optional var video_note:VideoNote;
+	@:optional var voice:Voice;
 	@:optional var caption:String;
+	@:optional var caption_entities:Array<MessageEntity>;
 	@:optional var contact:Contact;
-	@:optional var location:Location;
+	@:optional var dice:Dice;
+	@:optional var game:Game;
+	@:optional var poll:Poll;
 	@:optional var venue:Venue;
+	@:optional var location:Location;
 	@:optional var new_chat_members:Array<User>;
 	@:optional var left_chat_member:User;
 	@:optional var new_chat_title:String;
@@ -829,6 +915,7 @@ typedef Message = {
 	@:optional var successful_payment:SuccessfulPayment;
 	@:optional var connected_website:String;
 	@:optional var passport_data:PassportData;
+	@:optional var reply_markup:InlineKeyboardMarkup;
 	
 }
 
@@ -839,14 +926,30 @@ typedef MessageEntity = {
 	var length:Int;
 	@:optional var url:String;
 	@:optional var user:User;
+	@:optional var language:String;
 	
 }
 
 typedef PhotoSize = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	var width:Int;
 	var height:Int;
+	@:optional var file_size:Int;
+	
+}
+
+typedef Animation = {
+
+	var file_id:String;
+	var file_unique_id:String;
+	var width:Int;
+	var height:Int;
+	var duration:Int;
+	@:optional var thumb:PhotoSize;
+	@:optional var file_name:String;
+	@:optional var mime_type:String;
 	@:optional var file_size:Int;
 	
 }
@@ -854,6 +957,7 @@ typedef PhotoSize = {
 typedef Audio = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	var duration:Int;
 	@:optional var performer:String;
 	@:optional var title:String;
@@ -866,6 +970,7 @@ typedef Audio = {
 typedef Document = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	@:optional var thumb:PhotoSize;
 	@:optional var file_name:String;
 	@:optional var mime_type:String;
@@ -876,32 +981,11 @@ typedef Document = {
 typedef Video = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	var width:Int;
 	var height:Int;
 	var duration:Int;
 	@:optional var thumb:PhotoSize;
-	@:optional var mime_type:String;
-	@:optional var file_size:Int;
-	
-}
-
-typedef Animation = {
-
-	var file_id:String;
-	var width:Int;
-	var height:Int;
-	var duration:Int;
-	@:optional var thumb:PhotoSize;
-	@:optional var file_name:String;
-	@:optional var mime_type:String;
-	@:optional var file_size:Int;
-	
-}
-
-typedef Voice = {
-
-	var file_id:String;
-	var duration:Int;
 	@:optional var mime_type:String;
 	@:optional var file_size:Int;
 	
@@ -910,9 +994,20 @@ typedef Voice = {
 typedef VideoNote = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	var length:Int;
 	var duration:Int;
 	@:optional var thumb:PhotoSize;
+	@:optional var file_size:Int;
+	
+}
+
+typedef Voice = {
+
+	var file_id:String;
+	var file_unique_id:String;
+	var duration:Int;
+	@:optional var mime_type:String;
 	@:optional var file_size:Int;
 	
 }
@@ -924,6 +1019,46 @@ typedef Contact = {
 	@:optional var last_name:String;
 	@:optional var user_id:Int;
 	@:optional var vcard:String;
+	
+}
+
+typedef Dice = {
+
+	var emoji:String;
+	var value:Int;
+	
+}
+
+typedef PollOption = {
+
+	var text:String;
+	var voter_count:Int;
+	
+}
+
+typedef PollAnswer = {
+
+	var poll_id:String;
+	var user:User;
+	var option_ids:Array<Int>;
+	
+}
+
+typedef Poll = {
+
+	var id:String;
+	var question:String;
+	var options:Array<PollOption>;
+	var total_voter_count:Int;
+	var is_closed:Bool;
+	var is_anonymous:Bool;
+	var type:String;
+	var allows_multiple_answers:Bool;
+	@:optional var correct_option_id:Int;
+	@:optional var explanation:String;
+	@:optional var explanation_entities:Array<MessageEntity>;
+	@:optional var open_period:Int;
+	@:optional var close_date:Int;
 	
 }
 
@@ -954,6 +1089,7 @@ typedef UserProfilePhotos = {
 typedef File = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	@:optional var file_size:Int;
 	@:optional var file_path:String;
 	
@@ -973,6 +1109,13 @@ typedef KeyboardButton = {
 	var text:String;
 	@:optional var request_contact:Bool;
 	@:optional var request_location:Bool;
+	@:optional var request_poll:KeyboardButtonPollType;
+	
+}
+
+typedef KeyboardButtonPollType = {
+
+	@:optional var type:String;
 	
 }
 
@@ -993,11 +1136,21 @@ typedef InlineKeyboardButton = {
 
 	var text:String;
 	@:optional var url:String;
+	@:optional var login_url:LoginUrl;
 	@:optional var callback_data:String;
 	@:optional var switch_inline_query:String;
 	@:optional var switch_inline_query_current_chat:String;
 	@:optional var callback_game:CallbackGame;
 	@:optional var pay:Bool;
+	
+}
+
+typedef LoginUrl = {
+
+	var url:String;
+	@:optional var forward_text:String;
+	@:optional var bot_username:String;
+	@:optional var request_write_access:Bool;
 	
 }
 
@@ -1023,7 +1176,9 @@ typedef ForceReply = {
 typedef ChatPhoto = {
 
 	var small_file_id:String;
+	var small_file_unique_id:String;
 	var big_file_id:String;
+	var big_file_unique_id:String;
 	
 }
 
@@ -1031,20 +1186,43 @@ typedef ChatMember = {
 
 	var user:User;
 	var status:String;
+	@:optional var custom_title:String;
 	@:optional var until_date:Int;
 	@:optional var can_be_edited:Bool;
-	@:optional var can_change_info:Bool;
 	@:optional var can_post_messages:Bool;
 	@:optional var can_edit_messages:Bool;
 	@:optional var can_delete_messages:Bool;
-	@:optional var can_invite_users:Bool;
 	@:optional var can_restrict_members:Bool;
-	@:optional var can_pin_messages:Bool;
 	@:optional var can_promote_members:Bool;
+	@:optional var can_change_info:Bool;
+	@:optional var can_invite_users:Bool;
+	@:optional var can_pin_messages:Bool;
+	@:optional var is_member:Bool;
 	@:optional var can_send_messages:Bool;
 	@:optional var can_send_media_messages:Bool;
+	@:optional var can_send_polls:Bool;
 	@:optional var can_send_other_messages:Bool;
 	@:optional var can_add_web_page_previews:Bool;
+	
+}
+
+typedef ChatPermissions = {
+
+	@:optional var can_send_messages:Bool;
+	@:optional var can_send_media_messages:Bool;
+	@:optional var can_send_polls:Bool;
+	@:optional var can_send_other_messages:Bool;
+	@:optional var can_add_web_page_previews:Bool;
+	@:optional var can_change_info:Bool;
+	@:optional var can_invite_users:Bool;
+	@:optional var can_pin_messages:Bool;
+	
+}
+
+typedef BotCommand = {
+
+	var command:String;
+	var description:String;
 	
 }
 
@@ -1127,8 +1305,10 @@ typedef InputFile = {
 typedef Sticker = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	var width:Int;
 	var height:Int;
+	var is_animated:Bool;
 	@:optional var thumb:PhotoSize;
 	@:optional var emoji:String;
 	@:optional var set_name:String;
@@ -1141,8 +1321,10 @@ typedef StickerSet = {
 
 	var name:String;
 	var title:String;
+	var is_animated:Bool;
 	var contains_masks:Bool;
 	var stickers:Array<Sticker>;
+	@:optional var thumb:PhotoSize;
 	
 }
 
@@ -1212,6 +1394,7 @@ typedef InlineQueryResultGif = {
 	@:optional var gif_height:Int;
 	@:optional var gif_duration:Int;
 	var thumb_url:String;
+	@:optional var thumb_mime_type:String;
 	@:optional var title:String;
 	@:optional var caption:String;
 	@:optional var parse_mode:String;
@@ -1229,6 +1412,7 @@ typedef InlineQueryResultMpeg4Gif = {
 	@:optional var mpeg4_height:Int;
 	@:optional var mpeg4_duration:Int;
 	var thumb_url:String;
+	@:optional var thumb_mime_type:String;
 	@:optional var title:String;
 	@:optional var caption:String;
 	@:optional var parse_mode:String;
@@ -1604,6 +1788,7 @@ typedef PassportData = {
 typedef PassportFile = {
 
 	var file_id:String;
+	var file_unique_id:String;
 	var file_size:Int;
 	var file_date:Int;
 	
